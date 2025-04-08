@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sala Online - Spyfall</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+
+<body>
+  <h1>Sala Criada!</h1>
+  <div class="code-box">
+    <p>Compartilhe este código com seus amigos:</p>
+    <p class="room-code" id="roomCode">ABCDE</p>
+    <button class="button" onclick="copyCode()">Copiar Código</button>
+  </div>
+  <p>Aguardando jogadores entrarem na sala...</p>
+
+  <div class="player-list">
+    <h2>Jogadores na Sala</h2>
+    <div class="player-item">
+      <span class="player-name">Host</span>
+      <span class="player-role">(organizador)</span>
+    </div>
+    <div class="player-item">
+      <span class="player-name">Jogador2</span>
+      <span class="player-role"></span>
+    </div>
+    <div class="player-item">
+      <span class="player-name">Jogador3</span>
+      <span class="player-role"></span>
+    </div>
+  </div>
+</body>
+
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, onSnapshot, arrayUnion } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+  
+    const firebaseConfig = {
+      apiKey: "AIzaSyDR-I2XqmXsKSaZj56NvyH_tCRMtyB3QzE",
+      authDomain: "spyfall-3e04a.firebaseapp.com",
+      projectId: "spyfall-3e04a",
+      storageBucket: "spyfall-3e04a.appspot.com",
+      messagingSenderId: "742693771106",
+      appId: "1:742693771106:web:5d7c20acf55e91c7113e3b"
+    };
+  
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+  
+    // 🔍 Pega os parâmetros da URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const roomCode = urlParams.get("codigo");
+    const playerName = urlParams.get("nome");
+  
+    // Atualiza o código na tela
+    document.getElementById("roomCode").innerText = roomCode;
+  
+    const salaRef = doc(db, "salas", roomCode);
+    const salaSnap = await getDoc(salaRef);
+  
+    if (!salaSnap.exists()) {
+      // Se não existe, o usuário é o host e criará a sala
+      await setDoc(salaRef, {
+        jogadores: [playerName]
+      });
+    } else {
+      // Se já existe, adiciona o jogador (se ainda não estiver)
+      await updateDoc(salaRef, {
+        jogadores: arrayUnion(playerName)
+      });
+    }
+  
+    // Copiar código
+    function copyCode() {
+      navigator.clipboard.writeText(roomCode).then(() => {
+        alert("Código copiado!");
+      });
+    }
+    window.copyCode = copyCode;
+  
+    // 🔄 Atualiza lista de jogadores em tempo real
+    const playerListContainer = document.querySelector(".player-list");
+    function atualizarLista(jogadores) {
+      playerListContainer.innerHTML = `
+        <h2>Jogadores na Sala</h2>
+        ${jogadores.map(jogador => `
+          <div class="player-item">
+            <span class="player-name">${jogador}</span>
+            <span class="player-role">${jogador === "Host" ? "(organizador)" : ""}</span>
+          </div>
+        `).join("")}
+      `;
+    }
+  
+    onSnapshot(salaRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const dados = docSnap.data();
+        atualizarLista(dados.jogadores);
+      }
+    });
+  </script>
+  
+  
+
+
+
+</html>

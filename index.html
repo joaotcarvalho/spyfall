@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spyfall</title>
+  
+  <link rel="stylesheet" href="style.css">
+</head>
+
+
+
+<body>
+  <div class="title-container">
+    <div>
+        <img src="logo.png" class="logo-icon" alt="Logo Spyfall">
+    </div>
+    <h1 class="title-text">Spyfall</h1>
+    <div class="byline">by @joaohtcarvalho</div>
+  </div>
+
+  <script>
+    function criarSala() {
+      const codigo = gerarCodigo(5);
+      window.location.href = `online.html?codigo=${codigo}&nome=Host`;
+    }
+  
+    function gerarCodigo(tamanho = 5) {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let codigo = '';
+      for (let i = 0; i < tamanho; i++) {
+        codigo += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return codigo;
+    }
+  </script>
+  
+  <button class="button" onclick="criarSala()">Criar Sala Online</button>
+  <button class="button" onclick="window.location.href='offline.html'">Jogar offline</button>
+  <button class="button" onclick="window.location.href='entrar-sala.html'">Entrar em sala existente</button>
+</body>
+</html>

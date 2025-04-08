@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Entrar na Sala - Spyfall</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>Entrar em uma Sala</h1>
+
+  <div class="code-box">
+    <label for="roomCodeInput">Código da sala:</label><br/>
+    <input type="text" id="roomCodeInput" maxlength="5" placeholder="ABCDE" /><br/><br/>
+
+    <label for="playerNameInput">Seu nome:</label><br/>
+    <input type="text" id="playerNameInput" placeholder="Digite seu nome" /><br/><br/>
+
+    <button class="button" id="joinButton">Entrar na Sala</button>
+  </div>
+
+  <p id="message" style="margin-top: 20px; color: red;"></p>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-app.js";
+    import { getFirestore, doc, getDoc, updateDoc, arrayUnion } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDR-I2XqmXsKSaZj56NvyH_tCRMtyB3QzE",
+      authDomain: "spyfall-3e04a.firebaseapp.com",
+      projectId: "spyfall-3e04a",
+      storageBucket: "spyfall-3e04a.appspot.com",
+      messagingSenderId: "742693771106",
+      appId: "1:742693771106:web:5d7c20acf55e91c7113e3b"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const joinButton = document.getElementById("joinButton");
+    const message = document.getElementById("message");
+
+    joinButton.addEventListener("click", async () => {
+      const roomCode = document.getElementById("roomCodeInput").value.toUpperCase().trim();
+      const playerName = document.getElementById("playerNameInput").value.trim();
+
+      if (!roomCode || !playerName) {
+        message.textContent = "Preencha todos os campos.";
+        return;
+      }
+
+      const salaRef = doc(db, "salas", roomCode);
+      const salaSnap = await getDoc(salaRef);
+
+      if (!salaSnap.exists()) {
+        message.textContent = "Código inválido. Sala não encontrada.";
+        return;
+      }
+
+      // Adiciona o jogador na lista
+      await updateDoc(salaRef, {
+        jogadores: arrayUnion(playerName)
+      });
+
+      // Redireciona para a sala
+      window.location.href = `online.html?codigo=${roomCode}&nome=${encodeURIComponent(playerName)}`;
+    });
+  </script>
+</body>
+</html>

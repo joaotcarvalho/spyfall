@@ -1,0 +1,141 @@
+body {
+    margin: 0;
+    padding: 0;
+    background: #121212;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    color: white;
+  }
+
+  .title-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .title-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 0px;
+    fill: white;
+  }
+
+  .title-text {
+    font-size: 3rem;
+    color: white;
+    margin: 0;
+  }
+
+  .byline {
+    font-size: 0.7rem;
+    color: white;
+    margin-top: 5px;
+  }
+
+  .button {
+    background: white;
+    color: #000;
+    padding: 15px 30px;
+    margin: 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  .button:hover {
+      background: #e0e0e0;
+  }
+  .logo-icon {
+      width: 80px;
+      height: auto;
+  }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background: #121212;
+    font-family: Arial, sans-serif;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 40px 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+  }
+
+  .code-box {
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .room-code {
+    font-size: 2rem;
+    color: #00ffe1;
+    font-weight: bold;
+    letter-spacing: 2px;
+  }
+
+  .button {
+    background: white;
+    color: #000;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .button:hover {
+    background: #e0e0e0;
+  }
+
+  .player-list {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 400px;
+    background: #1e1e1e;
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .player-list h2 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    border-bottom: 1px solid #333;
+    padding-bottom: 10px;
+  }
+
+  .player-item {
+    padding: 10px 0;
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .player-item:last-child {
+    border-bottom: none;
+  }
+
+  .player-name {
+    font-weight: bold;
+  }
+
+  .player-role {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: #aaa;
+  }
