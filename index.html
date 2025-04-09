@@ -21,8 +21,15 @@
 
   <script>
     function criarSala() {
+      const nome = prompt("Digite o seu nome:");
+
+      if (!nome || nome.trim() == "") {
+        alert("Nome inválido!");
+        return;
+      }
+      
       const codigo = gerarCodigo(5);
-      window.location.href = `online.html?codigo=${codigo}&nome=Host`;
+      window.location.href = `online.html?codigo=${codigo}&nome=${encodeURIComponent(nome.trim())}`;
     }
   
     function gerarCodigo(tamanho = 5) {
@@ -33,10 +40,12 @@
       }
       return codigo;
     }
+
   </script>
   
   <button class="button" onclick="criarSala()">Criar Sala Online</button>
   <button class="button" onclick="window.location.href='offline.html'">Jogar offline</button>
   <button class="button" onclick="window.location.href='entrar.html'">Entrar em sala existente</button>
+
 </body>
 </html>

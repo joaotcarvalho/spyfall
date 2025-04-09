@@ -18,20 +18,9 @@
   </div>
   <p>Aguardando jogadores entrarem na sala...</p>
 
-  <div class="player-list">
+  <div class="player-list" id="playerList">
     <h2>Jogadores na Sala</h2>
-    <div class="player-item">
-      <span class="player-name">Host</span>
-      <span class="player-role">(organizador)</span>
-    </div>
-    <div class="player-item">
-      <span class="player-name">Jogador2</span>
-      <span class="player-role"></span>
-    </div>
-    <div class="player-item">
-      <span class="player-name">Jogador3</span>
-      <span class="player-role"></span>
-    </div>
+    <p id="loading">Caregando jogadores...</p>
   </div>
 </body>
 
@@ -84,7 +73,10 @@
   
     // 🔄 Atualiza lista de jogadores em tempo real
     const playerListContainer = document.querySelector(".player-list");
+
     function atualizarLista(jogadores) {
+      const loadingEl = document.getElementById("loading");
+      if(loadingEl) loadingEl.remove();
       playerListContainer.innerHTML = `
         <h2>Jogadores na Sala</h2>
         ${jogadores.map(jogador => `
